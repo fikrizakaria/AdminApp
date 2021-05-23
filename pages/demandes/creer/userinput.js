@@ -1,5 +1,13 @@
+auth.onAuthStateChanged(user => {
+    if (user) {
+      document.querySelector(".username").innerHTML=user.email.split("@")[0]
+    } else {
+      location.href="/pages/login/"
+    }
+  })
 const img=document.querySelector(".docimg")
 const form=document.querySelector(".insertForm")
+const logoutbtn=document.querySelector(".logout")
 console.log(window.location.search.substr(1).split("=")[1])
 var type;
 db.collection("demande_adhesion").where('__name__', '==' ,window.location.search.substr(1).split("=")[1]).get().then((snapshot)=>{
@@ -34,4 +42,9 @@ form.addEventListener("submit",(e)=>{
             window.location.href="/pages/demandes/"
           })
     })
+})
+logoutbtn.addEventListener("click",(e)=>{
+  e.preventDefault();
+  auth.signOut();
+  location.href="/pages/login/"
 })

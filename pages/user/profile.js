@@ -1,4 +1,12 @@
+auth.onAuthStateChanged(user => {
+    if (user) {
+      document.querySelector(".username").innerHTML=user.email.split("@")[0]
+    } else {
+      location.href="/pages/login/"
+    }
+  })
 const nom=document.querySelector(".profile-username")
+const logoutbtn=document.querySelector(".logout")
 const type=document.querySelector(".type")
 const cin=document.querySelector(".cin")
 const adresse=document.querySelector(".adresse")
@@ -50,4 +58,9 @@ form.addEventListener("submit",(e)=>{
     })
     
     $('#exampleModal').modal('show')
+})
+logoutbtn.addEventListener("click",(e)=>{
+    e.preventDefault();
+    auth.signOut();
+    location.href="/pages/login/"
 })
