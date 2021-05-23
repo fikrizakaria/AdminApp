@@ -2,6 +2,7 @@ auth.onAuthStateChanged(user => {
   if (user) {
     location.href="/pages/demandes"
   }
+  console.log(user)
 })
 const loginForm = document.querySelector('#loginForm');
 loginForm.addEventListener('submit', (e) => {

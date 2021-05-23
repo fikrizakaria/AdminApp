@@ -14,6 +14,9 @@ setTimeout(()=>{
             e.preventDefault()
             console.log("ok")
             db.collection("penalite").doc(e.target.getAttribute("data-id")).delete()
+            db.collection("Users").doc(e.target.getAttribute("data-id")).set({
+                banned:false
+            },{merge:true})
             $('#exampleModal').modal('show')
         })
     }
@@ -21,9 +24,8 @@ setTimeout(()=>{
 var close_btn
 db.collection("penalite").get().then((snapshot)=>{
     snapshot.docs.forEach(doc=>{
-        db.collection("document").doc(doc.id).get().then(docu=>{
-            console.log(doc.data().dateFin)
-            $('.penalites').DataTable().row.add([docu.data().nom+" "+docu.data().prenom,docu.data().type,new Date(doc.data().dateFin),docu.data().etat,doc.data().cause,`<span class='fa-close btn' ><i data-id='${doc.id}' class='fa fa-times' aria-hidden='true'></i></span>`]).draw(true)})
+        db.collection("Users").doc(doc.id).get().then(docu=>{
+            $('.penalites').DataTable().row.add([docu.data().secondName+" "+docu.data().firstName,docu.data().role==1?"Employeur":"Femme de service",new Date(doc.data().dateFin),doc.data().cause,`<span class='fa-close btn' ><i data-id='${doc.id}' class='fa fa-times' aria-hidden='true'></i></span>`]).draw(true)})
         })
     return snapshot;
 })
